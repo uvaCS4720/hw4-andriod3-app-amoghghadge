@@ -26,8 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.ui.text.font.FontWeight
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerInfoWindowContent
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import edu.nd.pmcburne.hello.ui.theme.MyApplicationTheme
@@ -118,11 +120,15 @@ fun MapView(placemarks: List<edu.nd.pmcburne.hello.data.Placemark>, modifier: Mo
         cameraPositionState = cameraPositionState
     ) {
         placemarks.forEach { placemark ->
-            Marker(
+            MarkerInfoWindowContent(
                 state = MarkerState(position = LatLng(placemark.latitude, placemark.longitude)),
-                title = placemark.name,
-                snippet = placemark.description
-            )
+                title = placemark.name
+            ) {
+                Column(modifier = Modifier.widthIn(max = 250.dp).padding(8.dp)) {
+                    Text(text = placemark.name, fontWeight = FontWeight.Bold)
+                    Text(text = placemark.description)
+                }
+            }
         }
     }
 }
