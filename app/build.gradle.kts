@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.secrets)
 }
 
 android {
@@ -41,6 +43,11 @@ android {
     }
 }
 
+secrets {
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = "local.defaults.properties"
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -50,6 +57,20 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+
+    // Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+
+    // Google Maps
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.maps)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
